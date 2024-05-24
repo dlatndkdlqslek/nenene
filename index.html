@@ -1,0 +1,228 @@
+알겠어요! 사용자가 답을 제출하면 정답 여부에 따라 피드백을 제공하는 기능을 추가하겠습니다.
+
+```html
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기출문제 풀이</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding-top: 30px;
+            min-height: 70px;
+            border-bottom: #4caf50 3px solid;
+        }
+        header h1 {
+            padding: 10px;
+        }
+        nav {
+            float: right;
+            padding: 20px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 5px 20px;
+            display: inline-block;
+        }
+        nav ul {
+            margin: 0;
+            padding: 0;
+            display: inline;
+        }
+        nav li {
+            display: inline;
+            list-style: none;
+            margin-left: 20px;
+        }
+        nav a:hover {
+            background: #4caf50;
+            transition: 0.5s;
+        }
+        section {
+            float: left;
+            width: 70%;
+            margin-top: 20px;
+            padding: 20px;
+        }
+        aside {
+            float: right;
+            width: 30%;
+            background: #333;
+            color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            clear: both;
+            position: relative;
+        }
+        .question {
+            background: #fff;
+            border: #ccc 1px solid;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .question h2 {
+            margin-top: 0;
+        }
+        .question p {
+            margin-bottom: 10px;
+        }
+        .year {
+            margin-bottom: 30px;
+        }
+        .feedback {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>기출문제 풀이</h1>
+            <nav>
+                <ul id="year-links">
+                    <li><a href="#" onclick="showQuestions('2023')">2023년</a></li>
+                    <li><a href="#" onclick="showQuestions('2022')">2022년</a></li>
+                    <li><a href="#" onclick="showQuestions('2021')">2021년</a></li>
+                    <!-- 추가적인 년도 링크들을 여기에 추가할 수 있습니다. -->
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section>
+        <div class="container">
+            <div class="year" id="year-2023">
+                <h2>2023년 기출문제</h2>
+                <div class="question">
+                    <h3>수학 기출문제 1</h3>
+                    <p>다음 방정식의 해를 구하시오: \(2x + 5 = 15\)</p>
+                    <form onsubmit="return checkAnswer('2023', 'math', '1', this.answer.value)">
+                        <input type="text" name="answer" placeholder="정답 입력">
+                        <input type="submit" value="제출">
+                    </form>
+                    <div id="feedback-2023-math-1" class="feedback"></div>
+                </div>
+                <div class="question">
+                    <h3>과학 기출문제 1</h3>
+                    <p>다음 중 원자가 가장 큰 원소는?</p>
+                    <form onsubmit="return checkAnswer('2023', 'science', '1', this.answer.value)">
+                        <input type="text" name="answer" placeholder="정답 입력">
+                        <input type="submit" value="제출">
+                    </form>
+                    <div id="feedback-2023-science-1" class="feedback"></div>
+                </div>
+                <div class="question">
+                    <h3>영어 기출문제 1</h3>
+                    <p>"My father often _____ to work by car."</p>
+                    <p>1. going</p>
+                    <p>2. goes</p>
+                    <p>3. went</p>
+                    <form onsubmit="return checkAnswer('2023', 'english', '1', this.answer.value)">
+                        <input type="text" name="answer" placeholder="정답 입력">
+                        <input type="submit" value="제출">
+                    </form>
+                    <div id="feedback-2023-english-1" class="feedback"></div>
+                </div>
+                <!-- 추가적인 문제들을 여기에 추가할 수 있습니다. -->
+            </div>
+            <!-- 추가적인 년도의 문제들을 여기에 추가할 수 있습니다. -->
+        </div>
+    </section>
+
+    <aside>
+        <h3>알
+
+림</h3>
+        <p>모든 문제는 실제 기출문제입니다.</p>
+    </aside>
+
+    <footer>
+        <p>&copy; 2024 기출문제 풀이. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        function showQuestions(year) {
+            var allYears = document.querySelectorAll('.year');
+            for (var i = 0; i < allYears.length; i++) {
+                allYears[i].style.display = 'none';
+            }
+            var selectedYear = document.getElementById('year-' + year);
+            if (selectedYear) {
+                selectedYear.style.display = 'block';
+            }
+        }
+
+        function checkAnswer(year, subject, number, userAnswer) {
+            var correctAnswer;
+            var feedbackDiv = document.getElementById('feedback-' + year + '-' + subject + '-' + number);
+            switch (subject) {
+                case 'math':
+                    switch (number) {
+                        case '1':
+                            correctAnswer = '5';
+                            break;
+                        default:
+                            correctAnswer = '';
+                    }
+                    break;
+                case 'science':
+                    switch (number) {
+                        case '1':
+                            correctAnswer = '수소';
+                            break;
+                        default:
+                            correctAnswer = '';
+                    }
+                    break;
+                case 'english':
+                    switch (number) {
+                        case '1':
+                            correctAnswer = '2';
+                            break;
+                        default:
+                            correctAnswer = '';
+                    }
+                    break;
+                // 추가적인 과목과 문제에 대한 정답을 여기에 추가할 수 있습니다.
+                default:
+                    correctAnswer = '';
+            }
+            if (userAnswer.trim() === correctAnswer) {
+                feedbackDiv.innerHTML = '정답입니다!';
+                feedbackDiv.style.color = 'green';
+            } else {
+                feedbackDiv.innerHTML = '틀렸습니다. 정답은 ' + correctAnswer + '입니다.';
+                feedbackDiv.style.color = 'red';
+            }
+            return false; // 폼 제출 방지
+        }
+    </script>
+
+</body>
+</html>
+```
+
+이렇게 하면 사용자가 답을 제출하면 정답 여부에 따라 피드백이 표시됩니다.
